@@ -1,0 +1,11 @@
+ASSUMPTIONS:
+
+
+Knobs to tweak:
+- Divide theta approx into more finely defined buckets
+
+Changes made along the way:
+- Assumption: The reward_function takes in both state and action, here for simplicity's sake, we only consider the state. So, regardless of
+left or right action, we only consider the state we're in to determine reward.
+  - Change: Instead of doing this, set env.state to any desired state and take an action, see the resilts, and save the resulting obs and
+  reward in one {the transition_and_reward_function}
