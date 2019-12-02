@@ -5,7 +5,22 @@ Knobs to tweak:
 - Divide theta approx into more finely defined buckets
 
 Changes made along the way:
-- Assumption: The reward_function takes in both state and action, here for simplicity's sake, we only consider the state. So, regardless of
+1. Assumption: The reward_function takes in both state and action, here for simplicity's sake, we only consider the state. So, regardless of
 left or right action, we only consider the state we're in to determine reward.
   - Change: Instead of doing this, set env.state to any desired state and take an action, see the resilts, and save the resulting obs and
   reward in one {the transition_and_reward_function}
+
+  # def create_reward_function(states, x_threshold, theta_threshold):
+  #     reward_function = {}
+  #     for state in states:
+  #         x_approx, x_dot_approx, theta_approx, theta_dot_approx = state
+  #         if -x_threshold < x_approx < x_threshold and -theta_threshold < theta_approx < theta_threshold:
+  #             reward_function[state] = 1
+  #         else:
+  #             reward_function[state] = 0
+  #     return reward_function
+  #
+  #
+  # reward_function = create_reward_function(states, env.x_threshold, env.theta_threshold_radians)
+
+2. Any kind of episode starts with reset...gym doesn't allow starting at random state and stepping from that state..you have to start from .reset()
