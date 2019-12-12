@@ -24,3 +24,6 @@ left or right action, we only consider the state we're in to determine reward.
   # reward_function = create_reward_function(states, env.x_threshold, env.theta_threshold_radians)
 
 2. Any kind of episode starts with reset...gym doesn't allow starting at random state and stepping from that state..you have to start from .reset()
+
+3. Implementing greedy policy. Instead of calculating the action-values of all actions and selecting the action with highest action-value as
+the greedy action, I was just looking at the next states and selecting the action that would lead to state with highest value.
