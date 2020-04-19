@@ -85,49 +85,39 @@ def get_optimal_action(state, optimal_policy):
 
 
 if __name__ == '__main__':
-    x_approx = generate(-4.8, 4.8, 0.1)
-    x_dot_approx = generate(-5, 5, 0.1)
-    theta_approx = generate(-0.5, 0.5, 0.1) # theta_thres is 24deg, i.e. 24*2*pi/360 radians
-    theta_dot_approx = generate(-5, 5, 0.1)
+    # Setting up
+    x_approx = generate(-0.5, 0.5, 0.01)
+    x_dot_approx = generate(-2.0, 2.0, 0.1)
+    theta_approx = generate(-0.1, 0.1, 0.01) # theta_thres is 24deg, i.e. 24*2*pi/360 radians
+    theta_dot_approx = generate(-3.0, 3.0, 0.1)
     states = generate_states(x_approx, x_dot_approx, theta_approx, theta_dot_approx)
-    transition_and_reward_function = create_transition_reward_function(states, [0,1], cartpole)
+    actions = [0,1]
+    transition_and_reward_function = create_transition_reward_function(states, actions, cartpole)
     starting_policy = {state:{0:0.5, 1:0.5} for state in states}
     value_function = {state:0 for state in states}
-    actions = [0,1]
-    optimal_policy = policy_iteration(states, actions, transition_and_reward_function, starting_policy, value_function, 10)
+    optimal_policy = policy_iteration(states, actions, transition_and_reward_function, starting_policy, value_function)
 
+    # Saving the optimal_policy on a file
+    optimal = open('optimal.pkl','wb')
+    pickle.dump(optimal_policy, optimal)
+    optimal.close()
+    print("done finding optimal_policy")
+
+    # Running test episodes with optimal_policy
     total_steps = 0
     num_episodes = 10
-
     for episode in range(0,num_episodes):
         observation = cartpole.reset()
         for timestep in range(1,101):
             cartpole.render()
             action = get_optimal_action(approximate(observation), optimal_policy)
-            print("Observation:", observation, ' ', "Action:", action)
             observation, reward, done, info = cartpole.step(action)
+            print("Observation:", observation, ' ', "Action:", action)
             if done:
                 print("Episode {} finished after {} timesteps".format(episode,timestep))
                 print(observation)
                 total_steps += timestep
                 break
 
-    print("average seconds per episode:", total_steps/num_episodes)
+    print("average time upright per episode:", total_steps/num_episodes)
     cartpole.close()
-
-
-# benchmark
-# total_steps = 0
-# num_episodes = 10
-# for episode in range(0,num_episodes):
-#     observation = cartpole.reset()
-#     for timestep in range(1,101):
-#         cartpole.render()
-#         observation, reward, done, info = cartpole.step(0)
-#         if done:
-#             print("Episode {} finished after {} timesteps".format(episode,timestep))
-#             print(observation)
-#             total_steps += timestep
-#             break
-# print("Average time upright per episode:", total_steps/num_episodes)
-# cartpole.close()
