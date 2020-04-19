@@ -29,8 +29,8 @@ def generate_states(x_approx, x_dot_approx, theta_approx, theta_dot_approx):
 def get_value(state, value_function):
     try:
         next_state_value = value_function[state]
-    except KeyError:
-        next_state_value = 0
+    except KeyError: # if next_state is not in value_function, assume it's a 'dead' state.
+        next_state_value = -500
     return next_state_value
 
 # Just have env as an argument and deduce actions from env
