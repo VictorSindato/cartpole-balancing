@@ -11,10 +11,10 @@ def approximate(raw_state):
     return tuple([round(num, 2) + 0 for num in array])
 
 def generate(lower_bound, upper_bound, interval):
-    output = []
+    output = [lower_bound]
     while lower_bound <= upper_bound:
-        output.append( float( round(lower_bound,1) + 0 ) )
         lower_bound += interval
+        output.append( float( round(lower_bound,1) + 0 ) )
     return output
 
 def generate_states(x_approx, x_dot_approx, theta_approx, theta_dot_approx):
