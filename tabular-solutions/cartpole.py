@@ -63,7 +63,7 @@ def improve_policy(states, actions, transition_and_reward_function, value_functi
 
 
 # Policy iteration
-def policy_iteration(states, actions, transition_and_reward_function, policy, value_function, number_of_iterations = 10):
+def policy_iteration(states, actions, transition_and_reward_function, policy, value_function, number_of_iterations = 50):
     new_value_function = {}
     for _ in range(number_of_iterations):
         print("iteration_number:",_)
@@ -76,8 +76,11 @@ def policy_iteration(states, actions, transition_and_reward_function, policy, va
     return policy
 
 def get_optimal_action(state, optimal_policy):
-    greedy_action, prob = max(optimal_policy[state].items(), key= lambda pair: pair[1])
-    return greedy_action
+    try:
+        greedy_action, prob = max(optimal_policy[state].items(), key= lambda pair: pair[1])
+        return greedy_action
+    except KeyError:
+        return random.randint(0,1)
 
 
 
