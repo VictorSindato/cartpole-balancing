@@ -1,13 +1,14 @@
 import math, gym, copy
 import operator
+import random
+import pickle
 from cartpole_env import *
 
 cartpole = CartPoleEnv()
 
 def approximate(raw_state):
     array = list(raw_state)
-    return tuple([round(array[i], 1 - i%2) + 0 for i in range(len(array))])
-    # return tuple([round(component, 1) + 0 for component in array])
+    return tuple([round(num, 2) + 0 for num in array])
 
 def generate(lower_bound, upper_bound, interval):
     output = []
