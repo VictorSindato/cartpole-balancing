@@ -33,7 +33,6 @@ def get_value(state, value_function):
         next_state_value = -500
     return next_state_value
 
-# Just have env as an argument and deduce actions from env
 def create_transition_reward_function(states, actions, env):
     table = {}
     for state in states:
@@ -43,16 +42,11 @@ def create_transition_reward_function(states, actions, env):
             table[(state, action)] = {'reward':reward, 'next_state':approximate(obs)}
     return table
 
-def policy_eval(state, actions, transition_and_reward_function, policy, value_function, gamma=1.0):
+def evaluate_policy(state, actions, transition_and_reward_function, policy, value_function, gamma=1.0):
     new_val = 0
     for action in actions:
         reward, next_state = transition_and_reward_function[(state, action)].values()
-        try:
-            next_state_value = value_function[next_state]
-        except KeyError:
-            # print("This state is out of bounds:", next_state)
-            next_state_value = 0
-        # Although the next state could be out of bounds, we'd still have a reward associated with being outside bounds for the first time
+        next_state_value = get_value(next_state, value_function)
         new_val += policy[state][action] * (reward + gamma*next_state_value)
     return new_val
 
@@ -76,7 +70,7 @@ def policy_iteration(states, actions, transition_and_reward_function, policy, va
         print("iteration_number:",_)
         # Evaluate every state under current policy
         for state in states:
-            new_value_function[state] = policy_eval(state, actions, transition_and_reward_function, policy, value_function)
+            new_value_function[state] = evaluate_policy(state, actions, transition_and_reward_function, policy, value_function)
         # Policy improvement
         policy = greedy_policy(states, actions, transition_and_reward_function, new_value_function)
         value_function = new_value_function
