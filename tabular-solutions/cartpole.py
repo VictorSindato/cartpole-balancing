@@ -50,14 +50,13 @@ def evaluate_policy(state, actions, transition_and_reward_function, policy, valu
         new_val += policy[state][action] * (reward + gamma*next_state_value)
     return new_val
 
-def greedy_policy(states, actions, transition_and_reward_function, value_function, gamma=1.0):
+def improve_policy(states, actions, transition_and_reward_function, value_function, gamma=1.0):
     new_policy = {}
     for state in states:
         action_values = {}
         for action in actions:
             reward, next_state = transition_and_reward_function[(state, action)].values()
             action_values[action] = reward + gamma*get_value(next_state, value_function)
-        # if there are two max values...just pick one (uniformly random across the actions)
         greedy_action, value = max(action_values.items(), key= lambda pair: pair[1])
         new_policy[state] = {action:1 if action is greedy_action else 0 for action in actions}
     return new_policy
@@ -72,7 +71,7 @@ def policy_iteration(states, actions, transition_and_reward_function, policy, va
         for state in states:
             new_value_function[state] = evaluate_policy(state, actions, transition_and_reward_function, policy, value_function)
         # Policy improvement
-        policy = greedy_policy(states, actions, transition_and_reward_function, new_value_function)
+        policy = improve_policy(states, actions, transition_and_reward_function, new_value_function)
         value_function = new_value_function
     return policy
 
