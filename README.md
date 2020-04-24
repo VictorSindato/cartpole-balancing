@@ -1,7 +1,7 @@
 
 # Cartpole-balancing
 
-The goal of this project was to apply policy iteration to the problem of balancing a pole on a moving cart. The goal is simple: as a controller you can only control the cart at every timestep by either pushing it left or right. There's a limit to how far the cart can move in both the left and right direction from its starting position (center). There's also a limit to the angle that the pole can fall from its vertical axis.
+The goal of this project was to apply policy iteration to the problem of balancing a pole on a moving cart. The goal is simple: as a controller you can only control the cart at every timestep by either pushing it left or right. There's a limit to how far the cart can move in both the left and right direction from its starting position (center). There's also a limit to the angle that the pole can fall from its vertical axis. More comprehensive problem definition can be found [here](https://github.com/openai/gym/wiki/CartPole-v0)
 
 ![cartpole](/assets/cartpole.png)
 
