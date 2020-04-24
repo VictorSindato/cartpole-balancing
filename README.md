@@ -4,7 +4,6 @@
 The goal of this project was to apply policy iteration to the problem of balancing a pole on a moving cart. The goal is simple: as a controller you can only control the cart at every timestep by either pushing it left or right. There's a limit to how far the cart can move in both the left and right direction from its starting position (center). There's also a limit to the angle that the pole can fall from its vertical axis.
 
 ![cartpole](/assets/cartpole.png)
-<div style="text-align: center"><img src = "/assets/cartpole.png"/></div>
 
 ## Policy iteration
 Policy iteration is a framework for nearly all control methods used in reinforcement learning. It consists of 2 processes: policy evaluation and policy improvement. These two procedures feedback into each other resulting into a new improved policy that always performs equally or better than the old one on the given environment.
